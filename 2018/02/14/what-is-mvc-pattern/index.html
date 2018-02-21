@@ -8,7 +8,7 @@
 <meta property="og:description" content="서론 tutorials point 사이트의 디자인 패턴 문서를 아주 많이 참고하여 적은 글입니다. (영어가 편하신 분들은 원 글을 보시는게 나을거에요 ㅋㅋㅋ) 제가 이해한대로 적었기 때문에 이미 개념을 알고계신 분들에게는 유치한 설명(?)으로…">
 <meta property="og:locale" content="kr">
 <meta property="og:image" content="http://hanee24.github.io/images/mvc.png">
-<meta property="og:updated_time" content="2018-02-15T15:46:44.000Z">
+<meta property="og:updated_time" content="2018-02-21T13:48:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVC Pattern 이란? - 개념 및 자바 예제">
 <meta name="twitter:description" content="서론 tutorials point 사이트의 디자인 패턴 문서를 아주 많이 참고하여 적은 글입니다. (영어가 편하신 분들은 원 글을 보시는게 나을거에요 ㅋㅋㅋ) 제가 이해한대로 적었기 때문에 이미 개념을 알고계신 분들에게는 유치한 설명(?)으로…">
@@ -24,42 +24,35 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
 <h3>Model</h3>
 <blockquote>
 <p><em>Model represents an object or JAVA POJO carrying data. It can also have logic to update controller if its data changes.</em></p>
-</blockquote>
-<blockquote>
 <p>모델은 데이터를 가지고 있는 객체 또는 <a href="https://ko.wikipedia.org/wiki/Plain_Old_Java_Object" target="_blank" rel="noopener">JAVA POJO</a>입니다. 데이터가 바뀌었을 때  컨트롤러의 데이터를 업데이트 하는 로직도 포함합니다.</p>
 </blockquote>
 <p>예를들어 '학생'이라는 데이터 set에 대해 모델을 만든다면 Student 클래스의 멤버 변수와 멤버 함수는 이정도 되겠네요</p>
 <ul>
-<li>멤버 변수 : rollNo(학번), name(힉생 이름)</li>
+<li>멤버 변수 : rollNo(학번), name(학생 이름)</li>
 <li>멤버 함수 : getRollNo, setRollNo, getName, setName</li>
 </ul>
 <p>보통 학번, 학생 이름과 같이 모델에서 다룰만한 데이터 들은 데이터베이스에 저장하죠! 그럴 경우 데이터베이스와 상호작용 하며 CRUD 작업을 하는 것도 모델의 멤버함수(getter, setter 등)들이 처리 합니다.</p>
 <h3>View</h3>
 <blockquote>
 <p><em>View represents the visualization of the data that model contains.</em></p>
-</blockquote>
-<blockquote>
 <p>모델에 포함된 데이터의 시각화를 담당합니다.</p>
 </blockquote>
-<p>여기서 '모델에 포함된 데이터'란 학번과 학생 이름입니다! 즉 뷰는 학번과 학생 이름이라는 데이터가 어플리케이션상에서 UI에 어떻게 나타날지에 관련된 코드 덩어리 입니다. 웹 어플리케이션이라면 HTML, Android 앱이라면 xml이 이 부분의 표현을 담당하는 언어죠. 즉 프로젝트의 뷰 폴더에는 웹 앱이라면 주로 html,안드로이드 앱이라면 주로 xml파일들이 들어 있을 거에요.</p>
+<p>여기서 '모델에 포함된 데이터'란 학번과 학생 이름입니다! 즉 뷰는 학번과 학생 이름이라는 데이터가 어플리케이션상에서 UI에 어떻게 나타날지에 관련된 코드 덩어리 입니다. 웹 어플리케이션이라면 HTML, Android 앱이라면 xml이 이 부분의 표현을 담당하는 언어죠. 즉 프로젝트의 뷰 폴더에는 웹 앱이라면 주로 html, 안드로이드 앱이라면 주로 xml 파일들이 들어 있을 거에요.</p>
 <h3>Controller</h3>
 <blockquote>
 <p><em>Controller acts on both model and view. It controls the data flow into model object and updates the view whenever data changes. It keeps view and model separate.</em></p>
-</blockquote>
-<blockquote>
 <p>컨트롤러는 모델과 뷰에 전부 영향을 미칩니다. 모델 객체로의 데이터 흐름을 제어하고 데이터가 update 되었을 때 뷰를 갱신합니다. 컨트롤러는 뷰와 모델의 역할을 분리합니다.</p>
 </blockquote>
-<p>저는 이렇게 생각하니까 명료했어요. <strong>모델과 뷰를 사용하는 건 컨트롤러, 컨트롤러를 사용하는 건 어플리케이션![^1]</strong></p>
-<p>컨트롤러는 모델과 뷰 객체를 활용해서 멤버 함수를 만듭니다. 컨트롤러의 역할은 어플리케이션에서 사용할 interface 함수들을 제공하는 것이죠.</p>
-<p>어플리케이션의 목적은 컨트롤러 객체의 함수들을 잘 사용해서 적절한 데이터를 적절한 UI에 보여주는 프로그램이 되는 것이겠죠.</p>
-<p>그리고 컨트롤러를 사용하는 게 어플리케이션이라는 말의 의미는, 어플리케이션을 실행했을 때 제어 흐름을 가진 코드에서 데이터와 관련된 작업을 하고 싶다면 모델, 뷰 객체는 건드릴 필요 없이 컨트롤러 객체만 가지고 놀면 된다는 의미입니다.</p>
-<p>이 관점에서 계속 본다면, 컨트롤러를 기준으로 추상화가 한단계 생기네요. 컨트롤러 윗 레벨에서는 모델과 뷰에 대해서는 알 필요가 없고 '컨트롤러 객체의 조작법'만 알면 되는거죠.</p>
-<p>사용자가 어플리케이션을 사용할 때의 조작 화면을 User Interface 라고 하는 것 처럼, 어플리케이션이 컨트롤러를 조작할 때 사용하는 컨트롤러가 제공하는 함수들도 일종이 Interface 함수들이라고 할 수 있습니다.</p>
+<p>빠밤! 설명의 하이라이트! 컨트롤러입니다. 저는 이렇게 생각하니까 명료했어요. <strong>모델과 뷰를 사용하는 건 컨트롤러, 컨트롤러를 사용하는 건 어플리케이션![^1]</strong></p>
+<p>컨트롤러는 모델과 뷰 객체를 활용해서 멤버 함수를 만듭니다. 컨트롤러의 역할은 어플리케이션에서 사용할 interface 함수[^2]들을 제공하는 것이죠.</p>
+<p>어플리케이션의 역할은 컨트롤러 객체의 함수들을 잘 사용해서 적절한 데이터를 적절한 UI에 보여주는 프로그램이 되는 것이겠죠. 그리고 컨트롤러를 사용하는 게 어플리케이션이라는 말의 의미는, 어플리케이션에서 데이터와 관련된 작업을 하고 싶다면 모델, 뷰 객체는 건드릴 필요 없이 컨트롤러 객체만 가지고 놀면 된다는 의미입니다.</p>
+<p>이 관점에서 계속 본다면, 컨트롤러를 기준으로 추상화가 한단계 생기네요. 컨트롤러 윗 레벨에서는 데이터베이스는 물론이고 모델과 뷰에 대해서도 알 필요가 없고 '컨트롤러 객체의 조작법'만 알면 되는거죠.</p>
 <p>이 부분 설명이 이해가 안가셨다면, 바로 아래 그림 보고, 예제 코드 보고 다시 설명 읽어보시면 감이오실거라고 믿어요ㅎㅎ</p>
 <h3>전체 구조 그림</h3>
 <p>그림에서 중요한 점은 뷰, 모델, 컨트롤러, 어플리케이션이 어떻게 상호작용을 하고있나 하는 점입니다!</p>
 <p><img src="http://hanee24.github.io/images/mvc.png" alt="mvc"></p>
 <p>[^1] : 여기서 어플리케이션이라는 단어는 software의 entry point로 제어 흐름을 가지는 코드를 뜻하는 의미로 사용하였습니다!</p>
+<p>[^2] : 사용자가 어플리케이션을 사용할 때의 조작 화면, 어플리케이션과 사용자의 접점을 User Interface 라고 하는 것 처럼, 어플리케이션이 컨트롤러를 조작할 때 사용하는 컨트롤러의 함수들도 일종의 Interface 라고 할 수 있습니다.</p>
 <h1>예제</h1>
 <h3>1. 모델</h3>
 <p><em>Student.java</em></p>
@@ -80,6 +73,6 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
   s.src = '//hanee24.disqus.com/embed.js';
   s.setAttribute('data-timestamp', +new Date());
   (d.head || d.body).appendChild(s);
-})();</script><noscript>Enable JavaScript to see comments.</noscript><!-- Meta Tags for Structured Data--><meta itemprop="dateModified" content="2018-02-15T15:46:44.000Z"><meta itemprop="articleBody" content="서론
+})();</script><noscript>Enable JavaScript to see comments.</noscript><!-- Meta Tags for Structured Data--><meta itemprop="dateModified" content="2018-02-21T13:48:30.000Z"><meta itemprop="articleBody" content="서론
 tutorials point 사이트의 디자인 패턴 문서를 아주 많이 참고하여 적은 글입니다. (영어가 편하신 분들은 원 글을 보시는게 나을거에요 ㅋㅋㅋ)
 제가 이해한대로 적었기 때문에 이미 개념을 알고계신 분들에게는 유치한 설명(?)으로 느껴질 수도 있습니다. 처음 개념을 접하시는 분들이 개념을 쉽게 이해하도록 돕는 것이 글의..."><meta itemprop="url" content="http://hanee24.github.io/2018/02/14/what-is-mvc-pattern/"><meta itemprop="mainEntityOfPage" content="http://hanee24.github.io/2018/02/14/what-is-mvc-pattern/"><div itemscope itemtype="https://schema.org/Organization" itemprop="publisher"><meta itemprop="name" content="박하늬의 개발 블로그"><div itemscope itemprop="logo" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="http://hanee24.github.io/images/logo_sparkle.jpg"></div></div><div itemscope itemtype="https://schema.org/ImageObject" itemprop="image"><meta itemprop="contentUrl" content="http://hanee24.github.io/images/default_jellyfish.jpg"><meta itemprop="url" content="http://hanee24.github.io/images/default_jellyfish.jpg"><meta itemprop="width" content="1280"><meta itemprop="height" content="720"></div></article></div></div></div><footer id="footer"><div class="widgets"><div class="widgets-inner"><!-- Jade doesn't support dynamic inclusion with `each`.--><!-- So, I just hard coded the file names that will be included.--><div class="widgets__item"><h3 class="widgets__item__heading">Tag cloud</h3><div class="tag-cloud"><a href="/tags/back-end/" style="font-size: 0.75rem;">back-end</a> <a href="/tags/designpattern/" style="font-size: 0.75rem;">designpattern</a> <a href="/tags/github/" style="font-size: 0.75rem;">github</a> <a href="/tags/java/" style="font-size: 0.75rem;">java</a> <a href="/tags/linux/" style="font-size: 0.75rem;">linux</a> <a href="/tags/redis/" style="font-size: 0.75rem;">redis</a></div></div><div class="widgets__item"><h3 class="widgets__item__heading">Recent posts</h3><ul class="recent-posts"><li class="recent-posts__item"><a href="/2018/02/14/what-is-mvc-pattern/">MVC Pattern 이란? - 개념 및 자바 예제</a></li><li class="recent-posts__item"><a href="/2018/01/05/how-to-install-redis-on-ubuntu-16-04/">Ubuntu 16.04에 레디스(Redis) 설치, 실행 하기</a></li><li class="recent-posts__item"><a href="/2017/12/21/how-to-upload-image-with-github-readme/">깃허브 README.md 파일에 이미지 업로드 하기</a></li></ul></div><div class="widgets__item"><h3 class="widgets__item__heading">Archives</h3><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li></ul></div></div></div><p class="copyright"><small>© 2018 박하늬 (Hanee Park)<br>Powered by <a href="https://hexo.io" rel="external" target="_blank">Hexo</a>, Theme by <a href="https://github.com/hyunseob" rel="external" target="_blank">HyunSeob</a></small></p></footer><script src="/js/sharer.min.js"></script></body></html>
