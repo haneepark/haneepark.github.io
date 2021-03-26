@@ -8,7 +8,7 @@
 <meta property="og:description" content="소개 Redis는 오픈소스 인메모리 데이터베이스 입니다. 제가 생각하는 특징적인 점은  메모리 기반이라 기존 데이터베이스들이랑 비교가 안될 정도로 너무너무너무너무 빠릅니다! 다양한 데이터 타입을 지원하고, 하드디스크 백업도 가능하기 때문에…">
 <meta property="og:locale" content="kr">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Redis_Logo.svg/1200px-Redis_Logo.svg.png">
-<meta property="og:updated_time" content="2021-01-14T14:03:34.606Z">
+<meta property="og:updated_time" content="2021-03-26T14:52:11.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu 16.04에 레디스(Redis) 설치, 실행 하기">
 <meta name="twitter:description" content="소개 Redis는 오픈소스 인메모리 데이터베이스 입니다. 제가 생각하는 특징적인 점은  메모리 기반이라 기존 데이터베이스들이랑 비교가 안될 정도로 너무너무너무너무 빠릅니다! 다양한 데이터 타입을 지원하고, 하드디스크 백업도 가능하기 때문에…">
@@ -51,15 +51,15 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
 <p>그리고 제대로 실행 되었는지 확인 해 보겠습니다.</p>
 <p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status redis</span><br></pre></td></tr></table></figure></p>
 <p>라고 입력했을 때 아래와 같이 active(running)상태라고 나온다면 성공하신거에요!</p>
-<p><img src="http://haneepark.github.io/images/redis-systemctl-status.png" alt="redis-systemctl-status"></p>
+<p><img src="/images/redis-systemctl-status.png" alt="redis-systemctl-status"></p>
 <p>systemd에 대한 활용법은 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units" target="_blank" rel="noopener">여기</a>를 참고 하세요.</p>
 <h2>Redis REPL세션</h2>
 <p><a href="https://redis.io/topics/rediscli" target="_blank" rel="noopener">redis-cli</a>는 터미널에서 직접 Redis를 다룰 수 있도록 하는 커맨드 라인 인터페이스 입니다. 다음의 명령어로 실행할 수 있습니다.</p>
 <p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure></p>
 <p>사진으로 예시를 보여 드릴게요.</p>
-<p><img src="http://haneepark.github.io/images/redis-cli.png" alt="redis-cli"></p>
+<p><img src="/images/redis-cli.png" alt="redis-cli"></p>
 <p>그리고 만약 한글 데이터를 다룰 일이 있으시면 <code>--raw</code>옵션을 주고 들어가시면 인코딩이 깨지지 않습니다.</p>
-<p><img src="http://haneepark.github.io/images/redis-cli-raw.png" alt="redis-cli-raw"></p>
+<p><img src="/images/redis-cli-raw.png" alt="redis-cli-raw"></p>
 <h2>References</h2>
 <ul>
 <li>https://redis.io/topics/faq</li>
@@ -71,7 +71,7 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
   s.src = '//hanee24.disqus.com/embed.js';
   s.setAttribute('data-timestamp', +new Date());
   (d.head || d.body).appendChild(s);
-})();</script><noscript>Enable JavaScript to see comments.</noscript><!-- Meta Tags for Structured Data--><meta itemprop="dateModified" content="2021-01-14T14:03:34.606Z"><meta itemprop="articleBody" content="
+})();</script><noscript>Enable JavaScript to see comments.</noscript><!-- Meta Tags for Structured Data--><meta itemprop="dateModified" content="2021-03-26T14:52:11.258Z"><meta itemprop="articleBody" content="
 소개
 Redis는 오픈소스 인메모리 데이터베이스 입니다.
 제가 생각하는 특징적인 점은
