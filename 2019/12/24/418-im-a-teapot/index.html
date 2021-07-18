@@ -21,10 +21,10 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
 <p>그런데, HTTP 상태 코드의 목록을 자세히 들여다 보면 이런 생소한 응답 코드도 존재한답니다.</p>
 <p><img src="/images/mozilla-418.png" alt=""><br>
 <a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Status" target="_blank" rel="noopener">https://developer.mozilla.org/ko/docs/Web/HTTP/Status</a></p>
-<p>찻 주전자…? 서버는 찻 주전자이기 때문에 커피를 끓일 수 없다고 합니다. 모질라 도큐먼트에 있는 내용 치고는 파격적입니다. 귀엽기도 하고요. 어쩌다 이런 스펙이 생겼을지 궁금하지 않으신가요?</p>
+<p>찻 주전자..? 서버는 찻 주전자이기 때문에 커피를 끓일 수 없다고 합니다. 모질라 도큐먼트에 있는 내용 치고는 파격적입니다. 귀엽기도 하고요. 어쩌다 이런 스펙이 생겼을지 궁금하지 않으신가요?</p>
 <hr>
 <p><a href="https://ko.wikipedia.org/wiki/%EA%B5%AD%EC%A0%9C_%EC%9D%B8%ED%84%B0%EB%84%B7_%ED%91%9C%EC%A4%80%ED%99%94_%EA%B8%B0%EA%B5%AC" target="_blank" rel="noopener">국제 인터넷 표준화 기구</a>(Internet Engineering Task Force, <strong>IETF</strong>)는 말그대로 전세계에서 통용되는 인터넷에 대한 표준, 명세를 정의하는 단체입니다.</p>
-<p>이 IETF에는 매 년 만우절에 농담섞인 RFC를 출판하고 있습니다. <a href="https://ko.wikipedia.org/wiki/RFC" target="_blank" rel="noopener">RFC</a>란 RFC 메모라고도 하는데요, 새로운 인터넷 기술이나 연구의 결과물을 담고있는 일종의 웹 출판물이라고 보시면 됩니다. 국제 웹 표준과 밀접한 관련이 있는 공신력있는 문서입니다. 장난으로 기술문서를 배포하다니, 일종의 '재능낭비’라고 할까요.</p>
+<p>이 IETF에는 매 년 만우절에 농담섞인 RFC를 출판하고 있습니다. <a href="https://ko.wikipedia.org/wiki/RFC" target="_blank" rel="noopener">RFC</a>란 RFC 메모라고도 하는데요, 새로운 인터넷 기술이나 연구의 결과물을 담고있는 일종의 웹 출판물이라고 보시면 됩니다. 국제 웹 표준과 밀접한 관련이 있는 공신력있는 문서입니다. 장난으로 기술문서를 배포하다니, 일종의 '재능낭비'라고 할까요.</p>
 <p><code>418 I'm a teapot</code>은, 1998년 만우절에 IETF에서 출판한 <a href="https://www.ietf.org/rfc/rfc2324.txt" target="_blank" rel="noopener">RFC2324</a>의 내용의 일부입니다. 이제 이 RFC의 내용을 살펴보겠습니다.</p>
 <h3 id="커피-주전자용-프로토콜-htcpcp"><a class="header-anchor" href="#커피-주전자용-프로토콜-htcpcp">#</a>커피 주전자용 프로토콜, HTCPCP</h3>
 <p>RFC2324의 주제는 바로 커피 주전자용 프로토콜, HTCPCP 입니다.</p>
@@ -73,7 +73,7 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
 <td>요청을 수행할 수 없을 때의 에러코드 입니다. 대표적인 예시로는 요청 헤더 Accept-Additions에 명시된 요구사항(e.g. 바닐라 시럽 추가)을 만족할 수 없는 경우 입니다.</td>
 </tr>
 <tr>
-<td>418 I’m a teapot</td>
+<td>418 I'm a teapot</td>
 <td>찻주전자가 커피를 끓여달라는 요청을 받았을 때의 에러코드 입니다. 이 경우 응답의 body는 짧고 통통(short and stout)할 수 있습니다.</td>
 </tr>
 </tbody>
@@ -82,7 +82,7 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
 <ul>
 <li>외국 블로그에 실물로 418 에러코드의 개념을 입증하는 찻주전자를 만든 사례도 한번 읽어보시면 재밌습니다. <a href="http://joereddington.com/418-error-code-teapot/" target="_blank" rel="noopener">http://joereddington.com/418-error-code-teapot/</a></li>
 <li>구글에 <code>/teapot</code> URL로 요청 하면, 실제로 418 응답코드를 내려줍니다. 깨알같은 이스터에그죠! <a href="https://www.google.com/teapot" target="_blank" rel="noopener">https://www.google.com/teapot</a></li>
-<li>418 응답 body가 short and stout 한 이유, I’m A Little Teapot Song 노래 입니다. <a href="https://www.youtube.com/watch?v=b14OeT1gNFo" target="_blank" rel="noopener">https://www.youtube.com/watch?v=b14OeT1gNFo</a></li>
+<li>418 응답 body가 short and stout 한 이유, I'm A Little Teapot Song 노래 입니다. <a href="https://www.youtube.com/watch?v=b14OeT1gNFo" target="_blank" rel="noopener">https://www.youtube.com/watch?v=b14OeT1gNFo</a></li>
 </ul>
 </div><div class="article__tags"><a class="article__tags__item" href="/tags/web/">web</a><a class="article__tags__item" href="/tags/http/">http</a></div><div class="article__author" itemscope itemprop="author" itemtype="https://schema.org/Person"><img class="article__author__image" src="/images/profile.jpg" alt="박하늬 (Hanee Park)"><a class="article__author__link" title="About 박하늬 (Hanee Park)" rel="author">박하늬 (Hanee Park)</a><p class="article__author__desc">병아리 웹 개발자 입니다.</p><div class="article__author__socials"><a class="article__author__socials__item" href="http://github.com/haneepark" title="github" target="_blank"><i class="fa fa-github"></i></a></div><meta itemprop="name" content="박하늬 (Hanee Park)"></div><div class="sharer" id="sharer"><div class="sharer-inner"><div class="sharer__right"><button class="sharer__item" id="sharer-facebook"><i class="fa fa-facebook-official"></i></button><button class="sharer__item" id="sharer-twitter"><i class="fa fa-twitter"></i></button><button class="sharer__item" id="sharer-pinterest"><i class="fa fa-pinterest"></i></button><button class="sharer__item" id="sharer-pocket"><i class="fa fa-get-pocket"></i></button></div></div></div><!-- Disqus Code--><div id="disqus_thread"></div><script>(function() {
   var d = document, s = d.createElement('script');

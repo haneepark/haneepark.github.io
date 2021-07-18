@@ -32,30 +32,30 @@ ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.
 <p>소스설치라고 함은 압축된 소스 파일을 직접 다운로드 하여 컴파일, 인스톨 하는 것을 의미합니다. 일반적으로 확인, 동의, 확인 만 누르면 저절로 설치되는 소프트웨어들과 다르고,  Ubuntu에서 apt-get이나 Mac에서 Homebrew로 편하게 패키지를 설치하는 것 과는 다르죠.</p>
 <h4 id="1-준비"><a class="header-anchor" href="#1-준비">#</a>1. 준비</h4>
 <p>일단, 레디스를 설치하기전에 반드시 설치해야 하는 의존 라이브러리들을 설치합니다.</p>
-<p>&lt;!–￼0–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install build-essential tcl</span><br></pre></td></tr></table></figure></p>
 <h4 id="2-소스-다운로드-및-압축-해제"><a class="header-anchor" href="#2-소스-다운로드-및-압축-해제">#</a>2. 소스 다운로드 및 압축 해제</h4>
 <p>이제 본격적으로 레디스 소스코드를 다운받아 설치하겠습니다.</p>
 <p>소스코드는 설치를 완료한 이후에는 필요 없으므로, 나중에 삭제하기 쉽도록 <code>/tmp/src</code> 폴더를 생성하고 그 안에서 작업하겠습니다.</p>
-<p>&lt;!–￼1–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /tmp/src</span><br><span class="line">cd /tmp/src</span><br></pre></td></tr></table></figure></p>
 <p>그리고 stable버전 중 가장 최신버전으로 다운로드 받습니다.</p>
-<p>&lt;!–￼2–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O http://download.redis.io/redis-stable.tar.gz</span><br></pre></td></tr></table></figure></p>
 <p>tar 형식의 압축파일을 압축 해제 합니다.</p>
-<p>&lt;!–￼3–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar xzvf redis-stable.tar.gz</span><br><span class="line">cd redis-stable</span><br></pre></td></tr></table></figure></p>
 <h4 id="3-컴파일"><a class="header-anchor" href="#3-컴파일">#</a>3. 컴파일</h4>
 <p>다음으로 컴파일을 해봅시다! 다음의 코드를 한 줄씩, 에러 없이 완료되는 것을 확인하면서 실행해주세요. <code>make test</code>는 잘 빌드되었는지 테스트를 하는 것이므로 생략해도 큰 문제 없습니다.</p>
-<p>&lt;!–￼4–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make test</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure></p>
 <p>설치 완료 입니다!</p>
 <h2 id="실행"><a class="header-anchor" href="#실행">#</a>실행</h2>
 <p>systemd service로 Redis를 실행시켜 봅시다</p>
-<p>&lt;!–￼5–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start redis</span><br></pre></td></tr></table></figure></p>
 <p>그리고 제대로 실행 되었는지 확인 해 보겠습니다.</p>
-<p>&lt;!–￼6–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status redis</span><br></pre></td></tr></table></figure></p>
 <p>라고 입력했을 때 아래와 같이 active(running)상태라고 나온다면 성공하신거에요!</p>
 <p><img src="/images/redis-systemctl-status.png" alt="redis-systemctl-status"></p>
 <p>systemd에 대한 활용법은 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-systemctl-to-manage-systemd-services-and-units" target="_blank" rel="noopener">여기</a>를 참고 하세요.</p>
 <h2 id="redis-repl세션"><a class="header-anchor" href="#redis-repl세션">#</a>Redis REPL세션</h2>
 <p><a href="https://redis.io/topics/rediscli" target="_blank" rel="noopener">redis-cli</a>는 터미널에서 직접 Redis를 다룰 수 있도록 하는 커맨드 라인 인터페이스 입니다. 다음의 명령어로 실행할 수 있습니다.</p>
-<p>&lt;!–￼7–&gt;</p>
+<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli</span><br></pre></td></tr></table></figure></p>
 <p>사진으로 예시를 보여 드릴게요.</p>
 <p><img src="/images/redis-cli.png" alt="redis-cli"></p>
 <p>그리고 만약 한글 데이터를 다룰 일이 있으시면 <code>--raw</code>옵션을 주고 들어가시면 인코딩이 깨지지 않습니다.</p>
