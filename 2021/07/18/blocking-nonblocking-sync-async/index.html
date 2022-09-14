@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="kr"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>이제 그만 헷갈렸으면 좋겠다. Blocking과 Non-Blocking, Sync와 Async | 유유하게 자라기</title><link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/css/highlights/dracula.css"><link rel="canonical" href="http://haneepark.github.io/2021/07/18/blocking-nonblocking-sync-async/"/>
+<meta name="description" content="Blocking과 Non-Blocking, Sync와 Async 개념은 뭐랄까.. 이해한 것 같다가도 오랜만에 보면 헷갈리고, 알 것 같다가도 섞어서 보면 또 모르겠더군요🤔 한 번 확실히 짚고 넘어가면 좋겠더라고요. 마침 적절한 비유까지 떠올라서…">
+<meta name="keywords" content="non-blocking,asynchronous,i&#x2F;o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="이제 그만 헷갈렸으면 좋겠다. Blocking과 Non-Blocking, Sync와 Async">
+<meta property="og:url" content="http://haneepark.github.io/2021/07/18/blocking-nonblocking-sync-async/">
+<meta property="og:site_name" content="유유하게 자라기">
+<meta property="og:description" content="Blocking과 Non-Blocking, Sync와 Async 개념은 뭐랄까.. 이해한 것 같다가도 오랜만에 보면 헷갈리고, 알 것 같다가도 섞어서 보면 또 모르겠더군요🤔 한 번 확실히 짚고 넘어가면 좋겠더라고요. 마침 적절한 비유까지 떠올라서…">
+<meta property="og:locale" content="kr">
+<meta property="og:image" content="http://haneepark.github.io/images/copy-machine.jpg">
+<meta property="og:updated_time" content="2022-09-14T13:27:49.993Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="이제 그만 헷갈렸으면 좋겠다. Blocking과 Non-Blocking, Sync와 Async">
+<meta name="twitter:description" content="Blocking과 Non-Blocking, Sync와 Async 개념은 뭐랄까.. 이해한 것 같다가도 오랜만에 보면 헷갈리고, 알 것 같다가도 섞어서 보면 또 모르겠더군요🤔 한 번 확실히 짚고 넘어가면 좋겠더라고요. 마침 적절한 비유까지 떠올라서…">
+<meta name="twitter:image" content="http://haneepark.github.io/images/copy-machine.jpg"><meta property="article:author" content="박하늬 (Hanee Park)"><meta property="twitter:label1" content="Published at"><meta property="twitter:data1" content="2021-07-18 17:48:33"><meta property="twitter:label2" content="Written by"><meta property="twitter:data2" content="박하늬 (Hanee Park)"><link rel="icon" href="/images/lazy_cat.png"><meta name="google-site-verification" content="YdJD0t7q3ImKeS6BksNs5AYECA8Qv4zId2sXzWOLbIY"><meta name="naver-site-verification" content="140c840ff377627ad337d669e378e88b41a4b8e2"><script>(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-111558095-1', 'auto');
+ga('send', 'pageview');</script></head><body itemscope itemtype="https://schema.org/WebPage"><nav class="menu" id="menu"><div class="menu-inner"><div class="menu__left-area"><div class="menu__item"><a class="menu__item__link menu__item__link--brand" href="/" title="Home" rel="home"><img class="menu__item__link--brand__image" src="/images/lazy_cat.png" alt="유유하게 자라기"><span class="menu__item__link--brand__label">유유하게 자라기</span></a></div></div><div class="menu__right-area"><div class="menu__item"><a class="menu__item__link" href="/">Home</a></div><div class="menu__item"><a class="menu__item__link" href="/about">About</a></div></div></div></nav><div class="page-background"></div><div class="content-container"><div class="content-outer"><div class="content-inner" itemscope itemtype="https://schema.org/Blog"><article class="article" id="article" itemscope itemtype="https://schema.org/BlogPosting"><h1 class="article__title" itemprop="headline">이제 그만 헷갈렸으면 좋겠다. Blocking과 Non-Blocking, Sync와 Async</h1><div class="article__meta"><time class="article__meta__time" datetime="2021-07-18T08:48:33.000Z" itemprop="datePublished">2021-07-18 17:48:33</time></div><hr><div class="article__contents"><p>Blocking과 Non-Blocking, Sync와 Async 개념은 뭐랄까.. 이해한 것 같다가도 오랜만에 보면 헷갈리고, 알 것 같다가도 섞어서 보면 또 모르겠더군요🤔</p>
+<p>한 번 확실히 짚고 넘어가면 좋겠더라고요. 마침 적절한 비유까지 떠올라서 글을 작성해봤습니다.</p>
+<hr>
+<p>저는 사무실에 있습니다. 복합기를 사용해서 스캔을 뜨고 싶습니다. 그런데 문서의 양이 많아서 시간이 좀 오래 걸립니다. 10분 이상 걸린다고 해볼까요.</p>
+<p>복합기의 시작 버튼을 눌렀습니다. 그리고 그 앞에서 스캔이 완료될때까지지 하염없이 기다렸다가 결과물 스캔 된 파일)을 갖게 된다면, 이것은 blocking입니다다. 10분은 아무것도 안 하기에는 꽤 긴 시간인데 말이죠. blocking 방식에는 다른 일을 모두 중지하고 작업이 완료되기 만을 오매불망 대기하는 이 <strong>기다림</strong>이 항상 포함되어 있습니다.</p>
+<p>반면 non-blocking은 기다림이 없습니다. 시작 버튼을 눌러 놓고 뭔가 다른 일을 합니다. (Hopefully, 함수 하나 정도 리팩토링해 봅시다) 다시 힐끗 확인 했을 때 아직 스캔 중이라면, 잠시 잊어버리고 다시 다른 일에집중합니다다. 조금 있다가 또 힐끗 확인 했을 때 완료되었다면, 이제 결과물을 가질 수 있습니다.</p>
+<p>이 짓거리(?)를 내가 직접 한다면 synchronous(이하 sync) 입니다. 반면 내가 직접 하지 않고 다른 누군가를 시킨다면 asynchronous(이하 async) 입니다.</p>
+<p>정리하자면 이렇습니다.</p>
+<ul>
+<li><strong>기다림</strong>Blocking  /  <strong>기다리지지 않음</strong> Non-blocking</li>
+<li><strong>내가 함</strong>Synchronous  /  <strong>다른른 사람 시킴</strong> Asynchronous</li>
+</ul>
+<p>사족을 좀 붙이자면, 우리가 종종 non-blocking과 async를 헷갈리는 이유는 둘 다 어쨌거나 '내가 기다림으로부터 자유롭다'는 공통점 때문인 것 같습니다. 그래서 이 비유를 일부러 넣었습니다. 비유를 통해서 차이가 더 분명하게 보이기를 기대하면서요.</p>
+<p><img src="/images/copy-machine.jpg" alt="copy-machine"></p>
+<p><s>짤은 그냥 넣어봤습니다.</s></p>
+<h2 id="섞어보기"><a class="header-anchor" href="#섞어보기">#</a>섞어보기</h2>
+<p>이 개념들의 묘미는, 두 가지의 서로 다른 개념을 섞었을 때 옵니다. 이제 섞어보겠습니다.</p>
+<ol>
+<li>
+<p>Sync-Blocking<br>
+앞의 blocking 설명과 사실상 동일합니다. 내가 복합기 앞으로 갑니다. 시작 버튼을 누릅니다. 다른 일 못하고 기다립니다. 완료되면 그제야 내 자리로 돌아가 스캔 완료된 파일을 사용합니다.</p>
+</li>
+<li>
+<p>Sync-NonBlocking<br>
+앞의 non-blocking 설명과 동일합니다. 내가 복합기 시작 버튼을 누릅니다. 자리로 돌아옵니다. 틈틈이 스캔이 완료되었는지 확인해줘야 합니다. 하지만 다른 일을 할 수 있습니다. 다른 일을 못 하면서까지 앞에 가서 기다리지는 않습니다.</p>
+</li>
+<li>
+<p>Async-Blocking<br>
+드디어 심부름꾼이 등장합니다. 나는 내 자리에 그대로 앉아있습니다. 나는 다른 일을 하는 동안, 심부름꾼에게 스캔을 하도록 시킵니다. 심부름꾼이 복합기 앞으로 갑니다. 시작 버튼을 누릅니다. 이 사람은 다른 일 못하고 이것만 기다립니다. 완료되면 심부름꾼은 내 자리로 돌아와 스캔이 완료되었다고 알려줍니다.</p>
+</li>
+<li>
+<p>Async-NonBlocking<br>
+나는 내 자리에 앉아서 내 일하는 동안, 심부름꾼에게 스캔을 하도록 시킵니다. 심부름꾼이 복합기 앞으로 가서 시작 버튼을 누릅니다. 심부름꾼은 스캔을 기다리면서 커피를 내려 마시면서 일기를 씁니다. 일기를 쓰는 동안, 틈틈이 스캔이 완료되었는지 곁눈질로 확인합니다. 스캔이 완료되면 내 자리로 돌아와 스캔이 완료되었다고 알려줍니다.</p>
+</li>
+</ol>
+<h2 id="이렇게-나누는-게-무슨-의미가-있나"><a class="header-anchor" href="#이렇게-나누는-게-무슨-의미가-있나">#</a>이렇게 나누는 게 무슨 의미가 있나?</h2>
+<p>그러면 여기서 생각해보겠습니다. 위의 네 가지 케이스 중에서, 두 사람의 '시간'이라는 자원을 가장 효율적으로 사용한 경우는 무엇일까요?</p>
+<p>아래의 그림을 보시면 명확합니다. 아무것도 하지 않고 기다리는 시간(또는 중간에 스캔이 완료되었는지 체크하는 시간)을 빈칸으로, 다른 작업 중인 시간을 색칠된 칸으로 나타냈습니다. 한마디로, 색칠된 면적이 클수록 시간을 효율적으로 사용했다고 볼 수 있습니다. 좀 단순화시키기는 했지만요.</p>
+<p>Async-NonBlocking이 가장 효율적이고, Sync-Blocking이 가장 비효율적이라고 볼 수 있겠네요.</p>
+<p><img src="/images/blocing-nonblocking-sync-async.png" alt="resource-table"></p>
+<p>제가 여기서 '시간' 비유를 통해 나타내고 싶었던 주인공은 사실, 'CPU'입니다. 컴퓨터에서 아무것도 하지 않고 있는 시간은 곧 CPU의 낭비라고 볼 수 있으니까요. 촘촘하게 시간을 사용한다는 것은 곧 CPU라는 컴퓨팅 자원을 효율적으로 사용한다는 뜻입니다. 그렇다면, Async-NonBlocking 방식을 사용할 때 가장 효율적이라는 결론이 나오네요.</p>
+<h2 id="운영체제의-입장에서"><a class="header-anchor" href="#운영체제의-입장에서">#</a>운영체제의 입장에서</h2>
+<p>이제 비유를 빼고, 운영체제의 입장에서 개발의 언어로 다시 말해보겠습니다.</p>
+<p>I/O 요청은 파일 읽기와 같은 디스크 I/O 요청, 소켓으로부터 읽기와 같은 네트워크 I/O 요청 등이 있는데요. CPU의 입장에서는 매우 시간이 오래 걸리는 작업입니다.</p>
+<p>I/O 요청을 blocking으로 처리한다는 것은, 프로세스가 I/O를 위한 시스템 콜을 한 뒤 sleeping이나 waiting 상태로 들어간다는 의미입니다. 그동안 프로세스는 CPU를 놓아주고 아무것도 하지 않는 상태가 됩니다. I/O 처리가 완료되고 요청한 데이터가 준비되면, 그때 인터럽트가 발생해 프로세스가 재개됩니다.</p>
+<p>반면 Non-blocking I/O는 CPU를 놓지 않습니다. Non-blocking 옵션으로 시스템 콜을 호출하게 되면, 아직 I/O가 완료되지 않았다면 falsy한 값을 반환받습니다. 시간이 걸리는 I/O 요청을 처리하는 동안 이 CPU 자원을 이용해서 다른 작업을 하고 있을 수 있습니다.</p>
+<p>Sync는 메인 흐름에서 순차적으로 처음부터 끝까지 처리합니다. 반면 별도의 스레드를 만들어서 처리하거나, 이벤트 핸들러, 콜백 함수 등을 사용하는 경우를 async라고 할 수 있습니다.</p>
+<p>정리하자면 이렇습니다.</p>
+<ul>
+<li><strong>CPU를 놓음</strong> Blocking  /  <strong>CPU를 놓지 않음</strong> Non-blocking</li>
+<li><strong>같은 흐름에서 처리</strong> Synchronous  /  <strong>다른 흐름에서 처리</strong> Asynchronous</li>
+</ul>
+<hr>
+<p>개념을 이해하는 데에 제 비유가 도움이 되었다면 좋겠네요!</p>
+<h2 id="references"><a class="header-anchor" href="#references">#</a>References</h2>
+<ul>
+<li><a href="https://reallinux.co.kr/" target="_blank" rel="noopener">Real Linux</a>의 '리눅스 SW 기본반' 강의 내용을 일부 참고해서 작성했음을 밝힙니다.</li>
+</ul>
+</div><div class="article__tags"><a class="article__tags__item" href="/tags/non-blocking/">non-blocking</a><a class="article__tags__item" href="/tags/asynchronous/">asynchronous</a><a class="article__tags__item" href="/tags/i-o/">i/o</a></div><div class="article__author" itemscope itemprop="author" itemtype="https://schema.org/Person"><img class="article__author__image" src="/images/profile.jpg" alt="박하늬 (Hanee Park)"><a class="article__author__link" title="About 박하늬 (Hanee Park)" rel="author">박하늬 (Hanee Park)</a><p class="article__author__desc">웹 개발자 입니다.</p><div class="article__author__socials"><a class="article__author__socials__item" href="http://github.com/haneepark" title="github" target="_blank"><i class="fa fa-github"></i></a></div><meta itemprop="name" content="박하늬 (Hanee Park)"></div><div class="sharer" id="sharer"><div class="sharer-inner"><div class="sharer__right"><button class="sharer__item" id="sharer-facebook"><i class="fa fa-facebook-official"></i></button><button class="sharer__item" id="sharer-twitter"><i class="fa fa-twitter"></i></button><button class="sharer__item" id="sharer-pinterest"><i class="fa fa-pinterest"></i></button><button class="sharer__item" id="sharer-pocket"><i class="fa fa-get-pocket"></i></button></div></div></div><!-- Disqus Code--><div id="disqus_thread"></div><script>(function() {
+  var d = document, s = d.createElement('script');
+  s.src = '//hanee24.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();</script><noscript>Enable JavaScript to see comments.</noscript><!-- Meta Tags for Structured Data--><meta itemprop="dateModified" content="2022-09-14T13:27:49.993Z"><meta itemprop="articleBody" content="Blocking과 Non-Blocking, Sync와 Async 개념은 뭐랄까.. 이해한 것 같다가도 오랜만에 보면 헷갈리고, 알 것 같다가도 섞어서 보면 또 모르겠더군요🤔
+한 번 확실히 짚고 넘어가면 좋겠더라고요. 마침 적절한 비유까지 떠올라서 글을 작성해봤습니다.
+
+저는 사무실에 있습니다. 복합기를 사용해서 스캔을 뜨고 싶습니다. 그런데 문서의..."><meta itemprop="url" content="http://haneepark.github.io/2021/07/18/blocking-nonblocking-sync-async/"><meta itemprop="mainEntityOfPage" content="http://haneepark.github.io/2021/07/18/blocking-nonblocking-sync-async/"><div itemscope itemtype="https://schema.org/Organization" itemprop="publisher"><meta itemprop="name" content="유유하게 자라기"><div itemscope itemprop="logo" itemtype="https://schema.org/ImageObject"><meta itemprop="url" content="http://haneepark.github.io/images/lazy_cat.png"></div></div><div itemscope itemtype="https://schema.org/ImageObject" itemprop="image"><meta itemprop="contentUrl" content="http://haneepark.github.io/images/default_jellyfish.jpg"><meta itemprop="url" content="http://haneepark.github.io/images/default_jellyfish.jpg"><meta itemprop="width" content="1280"><meta itemprop="height" content="720"></div></article></div></div></div><footer id="footer"><div class="widgets"><div class="widgets-inner"><!-- Jade doesn't support dynamic inclusion with `each`.--><!-- So, I just hard coded the file names that will be included.--><div class="widgets__item"><h3 class="widgets__item__heading">Tag cloud</h3><div class="tag-cloud"><a href="/tags/RDBMS/" style="font-size: 0.75rem;">RDBMS</a> <a href="/tags/amazon/" style="font-size: 0.75rem;">amazon</a> <a href="/tags/asynchronous/" style="font-size: 0.75rem;">asynchronous</a> <a href="/tags/authentication/" style="font-size: 0.75rem;">authentication</a> <a href="/tags/authorization/" style="font-size: 0.75rem;">authorization</a> <a href="/tags/back-end/" style="font-size: 1rem;">back-end</a> <a href="/tags/bookreview/" style="font-size: 1rem;">bookreview</a> <a href="/tags/compile/" style="font-size: 0.75rem;">compile</a> <a href="/tags/datastructure/" style="font-size: 0.75rem;">datastructure</a> <a href="/tags/designpattern/" style="font-size: 0.75rem;">designpattern</a> <a href="/tags/github/" style="font-size: 0.75rem;">github</a> <a href="/tags/hmac/" style="font-size: 0.75rem;">hmac</a> <a href="/tags/http/" style="font-size: 1rem;">http</a> <a href="/tags/http2-0/" style="font-size: 0.75rem;">http2.0</a> <a href="/tags/i-o/" style="font-size: 0.75rem;">i/o</a> <a href="/tags/ideas/" style="font-size: 1.25rem;">ideas</a> <a href="/tags/interview/" style="font-size: 1rem;">interview</a> <a href="/tags/introvert/" style="font-size: 0.75rem;">introvert</a> <a href="/tags/java/" style="font-size: 1rem;">java</a> <a href="/tags/linux/" style="font-size: 0.75rem;">linux</a> <a href="/tags/markdown/" style="font-size: 0.75rem;">markdown</a> <a href="/tags/mvc/" style="font-size: 0.75rem;">mvc</a> <a href="/tags/network/" style="font-size: 0.75rem;">network</a> <a href="/tags/non-blocking/" style="font-size: 0.75rem;">non-blocking</a> <a href="/tags/os/" style="font-size: 0.75rem;">os</a> <a href="/tags/redis/" style="font-size: 0.75rem;">redis</a> <a href="/tags/security/" style="font-size: 1.25rem;">security</a> <a href="/tags/sso/" style="font-size: 0.75rem;">sso</a> <a href="/tags/web/" style="font-size: 1.5rem;">web</a> <a href="/tags/개발문화/" style="font-size: 1rem;">개발문화</a> <a href="/tags/번역/" style="font-size: 1rem;">번역</a> <a href="/tags/취업/" style="font-size: 0.75rem;">취업</a> <a href="/tags/커뮤니케이션/" style="font-size: 0.75rem;">커뮤니케이션</a> <a href="/tags/코드리뷰/" style="font-size: 1rem;">코드리뷰</a> <a href="/tags/팀/" style="font-size: 1rem;">팀</a> <a href="/tags/회고/" style="font-size: 1rem;">회고</a> <a href="/tags/회사/" style="font-size: 1rem;">회사</a></div></div><div class="widgets__item"><h3 class="widgets__item__heading">Recent posts</h3><ul class="recent-posts"><li class="recent-posts__item"><a href="/2021/12/19/code-review-love-2/">리뷰어에게 사랑받는 코드 리뷰는 어떻게 보낼 수 있을까? - Part 2</a></li><li class="recent-posts__item"><a href="/2021/12/11/code-review-love-1/">리뷰어에게 사랑받는 코드 리뷰는 어떻게 보낼 수 있을까? - Part 1</a></li><li class="recent-posts__item"><a href="/2021/11/22/avoid-hard-delete/">병아리 서버 개발자가 하기 쉬운 실수 - 데이터 'DELTE'</a></li><li class="recent-posts__item"><a href="/2021/07/18/blocking-nonblocking-sync-async/">이제 그만 헷갈렸으면 좋겠다. Blocking과 Non-Blocking, Sync와 Async</a></li><li class="recent-posts__item"><a href="/2021/03/01/meaning-of-work/">3년의 개발자 생활 끝에 생각하는, 일하는 마음 (feat. 명언 대잔치)</a></li></ul></div><div class="widgets__item"><h3 class="widgets__item__heading">Archives</h3><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">March 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">1</span></li></ul></div></div></div><p class="copyright"><small>© 2022 박하늬 (Hanee Park)<br>Powered by <a href="https://hexo.io" rel="external" target="_blank">Hexo</a>, Theme by <a href="https://github.com/hyunseob" rel="external" target="_blank">HyunSeob</a></small></p></footer><!--[if lt IE 10]><script src="/js/classList.min.js"></script><![endif]--><script src="/js/index.min.js"></script></body></html>
